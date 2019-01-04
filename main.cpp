@@ -15,7 +15,7 @@ int main() {
     int chances = 9;
     char ch;
     std::locale loc;
-    std::string str ("argo");
+    std::string str ("all beautiful lives");
 
     std::transform(str.begin(),str.end(),str.begin(), ::toupper);
     inp = str;
@@ -36,23 +36,28 @@ int main() {
     {   	int flag=0,pres=0;
             
             if(win_lose(str))
-            {std::cout<<"You Won";
+            {std::cout<<"\n\n\n************************** YOU WON ***************************************";
              flag=1;
              break;
             }
    
         std::cin>>ch;
-        std::cout<<ch<<" - ";
+        char ch1 = std::toupper(ch,loc);
+        if (ch1 == 'A' || ch1 == 'E' || ch1 == 'I' || ch1 == 'O' || ch1 == 'U')
+        {std::cout<<"\n Sorry !! We only need consonants. You wasted a chance !"<<std::endl;
+        continue;}    
         
-        size_t t = inp.find_first_of(std::toupper(ch,loc));
+        size_t t = inp.find_first_of(ch1);
         
         while(t!=std::string::npos)
-        {   pres=1;
-
+        {   pres++;
             str.at(t)=std::toupper(ch,loc);
             t=inp.find_first_of(std::toupper(ch,loc),t+1);
-            
+
         }
+        if (pres>2)
+        std::cout<<"You just killed "<<pres<<" birds with 1 stone \n";
+    
         if(flag)
         break;
         
@@ -60,9 +65,11 @@ int main() {
         std::cout<<str<<'\n';
         else
         std::cout<<"Not Present\n";
+    
+        std::cout<<"Chances Left : "<<chances<<" \n";
     }
     
     if(!win_lose(str))
-    std::cout<<"You Lose";
+    std::cout<<"\n\n\n************************************ YOU LOSE ************************************";
             
 }
