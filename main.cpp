@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
-#include <locale> 
+#include <locale>           //toupper(),tolower() 
+#include <vector>            
+#include <cstdlib>          //rand(),srand()
 
 std::string inp;
 
@@ -11,32 +13,40 @@ int win_lose(std::string st)
  else
     return 1;
 }
+
 int main() {
     int chances = 9;
     char ch;
+
+    std::vector<std::string> vec={" The Shawshank Redemption "," The Godfather	","The Dark Knight	","The Godfather : Part II	","The Lord of the Rings: The Return of the King	","Pulp Fiction	","Schindler's List	","12 Angry Men	","Fight Club	","The Lord of the Rings : The Fellowship of the Ring	","Forrest Gump","The Lord of the Rings: The Two Towers	","Goodfellas	","One Flew Over the Cuckoo's Nest	","Seven Samurai	","Interstellar	","City of God	","Saving Private Ryan	","Life Is Beautiful	","Se7en	","Léon: The Professional	","The Silence of the Lambs	","It's a Wonderful Life	","Dangal	","Whiplash	","The Intouchables	","The Prestige	","The Departed	","The Pianist	","Gladiator	","The Green Mile	","American History X	","The Lion King	","Cinema Paradiso	","Grave of the Fireflies	"," Apocalypse Now	","Casablanca	","The Great Dictator	","Modern Times	","City Lights	","Your Name","Django Unchained	","3 Idiots	","Taare Zameen Par	","My Father and My Son	","The Lives of Others	","Oldboy	","American Beauty	","Braveheart	","Once Upon a Time in America"};
     std::locale loc;
-    std::string str ("all beautiful lives");
+    srand (time(NULL));
+    std::string str = vec.at(rand() % 49 + 1);
 
     std::transform(str.begin(),str.end(),str.begin(), ::toupper);
     inp = str;
     
-    size_t found = str.find_first_not_of("AEIOU");
+    size_t found = str.find_first_of("QWRTYPSDFGHJKLZXCVBNM0123456789");
     
     while(found!=std::string::npos)
     {   
         if(str.at(found) != ' ')
         str.at(found)='.';
         
-        found=str.find_first_not_of("AEIOU",found+1);
+        found=str.find_first_of("QWRTYPSDFGHJKLZXCVBNM0123456789",found+1);
     }
     
-    std::cout<<'\n'<<str<<'\n';
-    
-    while(chances--)
+    std::cout<<"\n Movie Name : "<<str<<'\n';
+    if(inp.find_first_of("0123456789")!=std::string::npos)
+	std::cout<<"Tip : Digits are also present in Movie name \n";
+
+    while(chances)
     {   	int flag=0,pres=0;
             
             if(win_lose(str))
-            {std::cout<<"\n\n\n************************** YOU WON ***************************************";
+            {if(chances==9)
+             std::cout<<"\n\n\nGOD MODE : All chances still left.";
+             std::cout<<"\n************************** YOU WON ***************************************";
              flag=1;
              break;
             }
@@ -45,6 +55,7 @@ int main() {
         char ch1 = std::toupper(ch,loc);
         if (ch1 == 'A' || ch1 == 'E' || ch1 == 'I' || ch1 == 'O' || ch1 == 'U')
         {std::cout<<"\n Sorry !! We only need consonants. You wasted a chance !"<<std::endl;
+	     chances-- ;
         continue;}    
         
         size_t t = inp.find_first_of(ch1);
@@ -56,7 +67,7 @@ int main() {
 
         }
         if (pres>2)
-        std::cout<<"You just killed "<<pres<<" birds with 1 stone \n";
+        std::cout<<"Congrats!! ,You just killed "<<pres<<" birds with 1 stone \n";
     
         if(flag)
         break;
@@ -64,9 +75,11 @@ int main() {
         if(pres)
         std::cout<<str<<'\n';
         else
-        std::cout<<"Not Present\n";
+        { chances--;
+          std::cout<<"Not Present\n";
+        }
     
-        std::cout<<"Chances Left : "<<chances<<" \n";
+        std::cout<<"Chances Left : "<<chances<<" \n\n";
     }
     
     if(!win_lose(str))
