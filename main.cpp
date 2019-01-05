@@ -5,18 +5,20 @@
 #include <vector>            
 #include <cstdlib>        
 
+std::string inp;
+
 int win_lose(std::string st)
 {
     if(inp.compare(st)!=0)
-	return 0;
+	    return 0;
+    
     else
         return 1;
 }
 
 int main() 
-{   std::string inp;
-    int again=1;
-    
+{   int again=1;
+
     while(again)
     {      
         int chances = 9;
@@ -105,7 +107,7 @@ int main()
         if(!win_lose(str))
         std::cout<<"\n\n\n************************************ YOU LOSE ************************************\n";
     
-        std::cout<<'\n'<<"Wanna play again ?  \n --->Enter 1  - Restart \n --->Enter 0  - End Game ";
+        std::cout<<'\n'<<"Wanna play again ?  \n --->Enter 1  - Restart \n --->Enter 0  - End Game \n";
         std::cin>>again;
     }
 }
