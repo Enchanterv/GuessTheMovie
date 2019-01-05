@@ -35,7 +35,8 @@ int main()
         std::locale loc;
         srand (time(NULL));
         std::string str = vec.at(rand() % 49 + 1);
-
+        
+	/* Start - Input string creation */
         std::transform(str.begin(),str.end(),str.begin(), ::toupper);
         inp = str;
         
@@ -48,12 +49,13 @@ int main()
             
             found=str.find_first_of("QWRTYPSDFGHJKLZXCVBNM0123456789",found+1);
         }
-
+	/* End - Input string creation  */
+	    
         std::cout<<"\n Movie Name : "<<str<<'\n';
         if(inp.find_first_of("0123456789")!=std::string::npos)
         std::cout<<"Tip : Digits are also present in Movie name \n";
 
-
+        /* Game logic starts here */
         while(chances)
         {   int flag=0,pres=0;
                 
